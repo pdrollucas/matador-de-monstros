@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Matador de monstros</title>
+    <link rel="stylesheet" href="style.css">
+    <script src="https://cdn.jsdelivr.net/npm/vue@2/dist/vue.js"></script>
+    <script defer src="app.js"></script>
+</head>
+<body>
+    <header>
+
+    </header>
+    <main id="app">
+        <section class="box box-personagens">
+            <article>
+                <h2>Jogador</h2>
+                <div class="life-bar">
+                    <div class="life" :class="{danger: playerLife < 20}" :style="{width: playerLife + '%'}"></div>
+                </div>
+                <div> {{ playerLife }}% </div>
+            </article>
+            <article>
+                <h2>Monstro</h2>
+                <div class="life-bar">
+                    <div class="life" :class="{danger: monsterLife < 20}" :style="{width: monsterLife + '%'}"></div>
+                </div>
+                <div> {{ monsterLife }}% </div>
+            </article>
+        </section>
+        <section v-if="hasResult" class="box">
+            <p v-if="monsterLife == 0" class="box-venceu">Você ganhou! :) </p>
+            <p v-else class="box-perdeu">Você perdeu! :| </p>
+        </section>
+        <section class="box botoes">
+            <article>
+                <template v-if="running">
+                    <button class="botao-1" @click="attack(false)">Ataque</button>
+                    <button class="botao-2" @click="attack(true)">Ataque especial</button>
+                    <button class="botao-3" @click="healAndHurt">Cura</button>
+                    <button class="botao-4" @click="running = false">Desistir</button>
+                </template>
+                <button v-else class="botao-5" @click="startGame">Iniciar jogo</button>
+            </article>
+        </section>
+        <section class="box box-avisos" v-if="logs.length">
+            <div v-for="log in logs">
+                <!--<li class="log" :class="log.cls">{{ log.text }}</li>-->
+                <p class="log" :class="log.cls">{{log.text}}</p>
+            </div>
+        </section>
+    </main>
+    <footer>
+
+    </footer>
+</body>
+</html>
